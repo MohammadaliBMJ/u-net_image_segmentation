@@ -1,0 +1,7 @@
+torch
+torchvision
+numpy
+Pillow
+pytest
+wandb
+segmentation-models-pytorch
