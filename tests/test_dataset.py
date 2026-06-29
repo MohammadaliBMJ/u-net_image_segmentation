@@ -37,13 +37,15 @@ def test_dataset_resizing():
     assert image.shape == (3, 64, 64), f"Expected image shape (3,64,64), got {image.shape}"
     assert mask.shape == (64, 64), f"Expected mask shape (64,64), got {mask.shape}"
 
-def test_mask_class_ids(dataset):
+def test_mask_class_ids():
     """
-    Ensure mask contains only valid class IDs (0–3).
+    Ensure mask contains only valid class IDs (0–2).
     This prevents training crashes due to unexpected labels.
     """
-    _, mask = dataset[0]
+    ds = OxfordDataset(root_path="data", split="trainval", image_size=128)
+
+    _, mask = ds[0]
 
     unique_vals = torch.unique(mask)
     for v in unique_vals:
-        assert 0 <= v <= 3, f"Mask contains invalid class ID: {v.item()}"
+        assert 0 <= v <= 2, f"Mask contains invalid class ID: {v.item()}"
